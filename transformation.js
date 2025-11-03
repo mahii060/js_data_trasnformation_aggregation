@@ -115,6 +115,18 @@ const topElectronicProducts = rawApiData
     .slice(0, 3) // Get the product form 0 index to 2 index
     .map(product => ({ name: product.productName }))
 
+const numbers = [4, 59, 2, 9, 99, 32, 1, 0, 6, 7, 8, 3]
+// console.log(numbers.sort((a, b) => a - b));
+
+// console.log(topElectronicProducts);
 
 
-console.log(topElectronicProducts);
+const tagsFromPosts = [
+    ["javascript", "react", "css"],
+    ["node", "express"],
+    ["css", "html", "react"],
+];
+
+// avoiding duplications of tags
+const filteredTags = [...new Set(tagsFromPosts.flat())]
+console.log(filteredTags);
