@@ -21,4 +21,4 @@ const productsStatus = products.some(product => product.stock === 0)
 const currentUserRoles = ['user', 'editor', 'admin']
 const featureAccessRole = ['admin', 'manager']
 const canAccess = currentUserRoles.some(role => featureAccessRole.includes(role));
-console.log(canAccess);
+// console.log(canAccess);
