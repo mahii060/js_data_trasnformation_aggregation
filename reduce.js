@@ -88,4 +88,74 @@ console.log(grouped);
 
 const randomNumbers = [44, 98, 49, 39, 92, 98, 342, 983, 9, 3, 8, 334];
 const maxOfRandomNumbers = randomNumbers.reduce((acc, curr) => acc > curr ? acc : curr, randomNumbers[0])
-console.log(maxOfRandomNumbers);
+// console.log(maxOfRandomNumbers);
+
+const players = [
+    { name: "Jamal Bhuyan", score: 88 },
+    { name: "Shekh Morsalin", score: 81 },
+    { name: "Rakib Hossain", score: 95 },
+    { name: "Topu Barman", score: 91 },
+    { name: "Sohel Rana", score: 72 },
+];
+const bestScorer = players.reduce((max, currentPlayer) => max > currentPlayer.score ? max : currentPlayer.score, players[0].score)
+// console.log(bestScorer);
+
+const bestPlayer = players.reduce((bestPlayer, player) => (bestPlayer.score > player.score ? bestPlayer : player), players[0])
+// console.log(bestPlayer.name, bestPlayer.score);
+
+const cartItems = [
+    { id: "p-001", name: "Daraz Laptop Bag", price: 1500, quantity: 1 },
+    { id: "p-002", name: "Walton USB-C Cable", price: 350, quantity: 2 },
+    { id: "p-003", name: "Aarong Kurta", price: 2200, quantity: 1 },
+];
+
+// Always remember when calculating total value, the initial value must be 0;
+
+const subTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), {})
+// console.log(subTotal);
+
+// lookup table
+const postsArray = [
+    { id: "p-101", title: "Intro to SQL", author: "Alex" },
+    { id: "p-102", title: "Data Structures in JS", author: "Beth" },
+    { id: "p-103", title: "Understanding Reduce", author: "Chris" },
+    { id: "p-104", title: "CSS Grid Tricks", author: "Alex" },
+];
+const lookupTable = postsArray.reduce((table, post) => {
+    table[post.id] = post
+    return table
+}, {})
+
+// console.log(lookupTable['p-101']);
+
+// Grouping and aggregating data
+const surveyResponses = [
+    "A",
+    "C",
+    "B",
+    "A",
+    "B",
+    "B",
+    "C",
+    "A",
+    "B",
+    "D",
+    "A",
+    "C",
+    "B",
+    "A",
+];
+// Initiate empty object
+// Check if the response already exist
+// if it exist the increment the count
+// if not then initialize it with 1
+const count = surveyResponses.reduce((table, response) => {
+    if (table[response]) {
+        table[response] = table[response] + 1;
+    }
+    else {
+        table[response] = 1;
+    }
+    return table
+}, {})
+console.log(count);
