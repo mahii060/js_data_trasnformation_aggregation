@@ -150,6 +150,8 @@ const surveyResponses = [
 // if it exist the increment the count
 // if not then initialize it with 1
 const count = surveyResponses.reduce((table, response) => {
+
+    // console.log(table, " : ", response);
     if (table[response]) {
         table[response] = table[response] + 1;
     }
@@ -158,4 +160,107 @@ const count = surveyResponses.reduce((table, response) => {
     }
     return table
 }, {})
-console.log(count);
+// console.log(count);
+
+
+//* Grouping and Aggregating Data
+
+// Scenario: You have a flat array of sales data, and you need to group the sales by category, calculating the total revenue and the number of items sold for each.
+
+// Steps:
+// Init an empty object in which the whole category will be shown
+// Init object by category
+// Calculate the revenue
+
+const products = [
+    { category: "Electronics", item: "Laptop", price: 1200, quantity: 1 },
+    { category: "Books", item: "JS Basics", price: 30, quantity: 2 },
+    { category: "Electronics", item: "Mouse", price: 25, quantity: 2 },
+    { category: "Home", item: "Chair", price: 150, quantity: 1 },
+    { category: "Books", item: "React Deep Dive", price: 50, quantity: 1 },
+    { category: "Electronics", item: "Keyboard", price: 80, quantity: 1 },
+];
+
+const totalSalesByCategory = products.reduce((table, product) => {
+
+    const { category, price, quantity } = product;
+
+    if (!table[category]) {
+        table[category] = {
+            totalRevenue: 0,
+            productCount: 0
+        }
+    }
+
+    table[category].totalRevenue += quantity * price;
+    table[category].productCount += quantity;
+
+    // console.log(table, " : ", product);
+    return table
+}, {})
+// console.log(totalSalesByCategory);
+
+//* Denormalizing Data (Client-Side "Join")
+
+// Scenario: You have an array of users and a separate array of posts.
+// You want to create a new array of users where each user object contains a posts array of their own posts.
+
+const users = [
+    { id: 101, name: "Alice" },
+    { id: 102, name: "Bob" },
+    { id: 103, name: "Charlie" },
+];
+
+const posts = [
+    { id: 1, userId: 102, title: "My first post" },
+    { id: 2, userId: 101, title: "React Hooks" },
+    { id: 3, userId: 101, title: "Data Structures" },
+    { id: 4, userId: 103, title: "CSS is fun" },
+    { id: 5, userId: 102, title: "Node.js streams" },
+];
+
+const postByUserId = posts.reduce((table, post) => {
+    const { userId } = post;
+    if (!table[userId]) {
+        table[userId] = []
+    }
+    table[userId].push(post)
+    return table
+}, {})
+
+/*
+const user= {
+  '101': [
+    { id: 2, userId: 101, title: 'React Hooks' },
+    { id: 3, userId: 101, title: 'Data Structures' }
+  ],
+
+  '102': [
+    { id: 1, userId: 102, title: 'My first post' },
+    { id: 5, userId: 102, title: 'Node.js streams' }
+  ],
+
+  '103': [ { id: 4, userId: 103, title: 'CSS is fun' } ]
+}
+
+
+*/
+// console.log(postByUserId);
+const userWithPost = users.map(user => {
+    return {
+        ...user,
+        post: postByUserId[user.id] || [],
+    }
+})
+/*
+[
+
+{"id":101,"name":"Alice","post":[{"id":2,"userId":101,"title":"React Hooks"},{"id":3,"userId":101,"title":"Data Structures"}]},
+
+{"id":102,"name":"Bob","post":[{"id":1,"userId":102,"title":"My first post"},{"id":5,"userId":102,"title":"Node.js streams"}]},
+
+{"id":103,"name":"Charlie","post":[{"id":4,"userId":103,"title":"CSS is fun"}]}
+
+]
+*/
+console.log(JSON.stringify(userWithPost));
